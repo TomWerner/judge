@@ -2,6 +2,8 @@
 target/
 judge.iml
 
+src/resources/*.properties
+
 *.class
 
 # Mobile Tools for Java (J2ME)

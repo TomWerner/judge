@@ -1,11 +1,6 @@
-security.user.password=password
-
-# DataSource settings: set here your own configurations for the database
-# connection. In this example we have "userdb" as database name and
-# "root" as username and password.
 spring.datasource.url = jdbc:mysql://localhost:3306/judgedb
-spring.datasource.username = root
-spring.datasource.password = root
+spring.datasource.username =
+spring.datasource.password =
 spring.datasource.driverClassName=com.mysql.jdbc.Driver
 
 # Show or not log for each sql query
