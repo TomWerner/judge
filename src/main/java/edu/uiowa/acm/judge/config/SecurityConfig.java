@@ -26,12 +26,12 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource datasource;
+    private DataSource dataSource;
 
     @Bean
     public JdbcUserDetailsManager userDetailsService() {
         final JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
-        userDetailsService.setDataSource(datasource);
+        userDetailsService.setDataSource(dataSource);
         return userDetailsService;
     }
 
@@ -64,14 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-        auth.jdbcAuthentication().dataSource(datasource);
-
-//        if(!userDetailsService.userExists("user2")) {
-//            final List<GrantedAuthority> authorities = new ArrayList<>();
-//            authorities.add(new SimpleGrantedAuthority("USER"));
-//            final User userDetails = new User("user2", encoder.encode("password"), authorities);
-//
-//            userDetailsService.createUser(userDetails);
-//        }
+        auth.jdbcAuthentication().dataSource(dataSource);
     }
 }
