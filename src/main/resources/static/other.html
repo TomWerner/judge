@@ -1,0 +1,45 @@
+<div class="panel panel-default login-panel">
+    <div class="panel-heading"><h1>HawkID Login  for ICON</h1></div>
+    <div class="panel-body">
+        <div class="brand">
+            <img class="img img-icon" src="/uip/images/ICON.png" alt="University of Iowa Logo">
+        </div>
+
+        <div class="form-container">
+            <form name="loginForm" method="post" action="/uip/login.page" class="form-signin">
+
+
+                <div class="form-group">
+                    <label for="hawkid">HawkID</label>
+                    <input name="uip_hawkid" type="text" class="form-control" id="hawkid" value="" required="" autofocus="">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input name="uip_password" type="password" class="form-control" id="password" value="" required="">
+                </div>
+
+                <div class="login-error"></div>
+
+
+                <input type="hidden" name="service" value="http://icon.uiowa.edu/landingPage">
+
+                <input type="hidden" name="uip_nonPassportRequestParameters" value="">
+
+                <input type="submit" name="uip_action" value=" Log In " class="btn btn-primary login-button">
+                <div class="help-text">
+                    <a href="http://hawkid.uiowa.edu/">Forgot your HawkID or password?</a>
+                </div>
+            </form>
+            <script type="text/javascript" language="JavaScript">
+                <!--
+                var focusControl = document.forms["loginForm"].elements["uip_hawkid"];
+
+                if (focusControl.type != "hidden") {
+                    focusControl.focus();
+                }
+                // -->
+            </script>
+
+        </div>
+    </div>
+</div>

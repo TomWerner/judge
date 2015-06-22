@@ -3,6 +3,7 @@ package edu.uiowa.acm.judge.config;
 import edu.uiowa.acm.judge.security.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,10 +23,22 @@ import javax.sql.DataSource;
  */
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource datasource;
+
+    @Bean
+    public JdbcUserDetailsManager userDetailsService() {
+        final JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
+        userDetailsService.setDataSource(datasource);
+        return userDetailsService;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
@@ -48,11 +61,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        final JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
-        userDetailsService.setDataSource(datasource);
-        final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
+
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
         auth.jdbcAuthentication().dataSource(datasource);
 
 //        if(!userDetailsService.userExists("user2")) {
