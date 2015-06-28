@@ -2,12 +2,14 @@ package edu.uiowa.acm.judge.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
 /**
  * Created by Tom on 6/21/2015.
  */
+@Configuration
 public class DatabaseConfig {
     @Value("${spring.datasource.driverClassName}")
     private String databaseDriverClassName;
