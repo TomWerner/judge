@@ -30,7 +30,7 @@ public class RankingsController {
         TeamMember member = new TeamMember(team, "Tom Werner");
         teamMemberDao.save(member);
 
-        member = new TeamMember(team, "Ryan Wedoff", "ryan-wedoff@uiowa.edu");
+        member = new TeamMember(team, "Ryan Wedoff");
         teamMemberDao.save(member);
 
         return teamMemberDao.findByTeam(team);

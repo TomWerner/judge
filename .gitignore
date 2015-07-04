@@ -2,7 +2,7 @@
 target/
 judge.iml
 
-src/resources/*.properties
+src/main/resources/*.properties
 
 *.class
 

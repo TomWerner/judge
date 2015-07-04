@@ -24,11 +24,18 @@ public class Problem implements Serializable {
     @Column
     private String problemBody;
 
-    public Problem(final Team.TeamLevel teamLevel, final String problemTitle, final String problemBody) {
+    @Column
+    private boolean enabled;
+
+    public Problem(final Team.TeamLevel teamLevel,
+                   final String problemTitle,
+                   final String problemBody,
+                   final boolean enabled) {
         super();
         this.teamLevel = teamLevel;
         this.problemTitle = problemTitle;
         this.problemBody = problemBody;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -57,5 +64,13 @@ public class Problem implements Serializable {
 
     public void setProblemBody(final String problemBody) {
         this.problemBody = problemBody;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -1,16 +1,17 @@
 package edu.uiowa.acm.judge.controllers;
 
+import edu.uiowa.acm.judge.mail.MyMailSender;
+import edu.uiowa.acm.judge.models.NewUserSubmission;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,28 +22,44 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    private final Logger LOG = Logger.getLogger(UserController.class);
 
     @Autowired
     private JdbcUserDetailsManager userDetailsService;
 
     @Autowired
+    private MyMailSender mailSender;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping("/getUser")
+    @RequestMapping(value = "/getUser", method = RequestMethod.GET)
     public Principal user(final Principal user) {
+        LOG.info("Get user " + user);
+        mailSender.placeOrder();
         return user;
     }
 
-    @RequestMapping(value="/addUser", method = RequestMethod.POST)
-    public void addUser(@RequestParam(required = true) final String username,
-                        @RequestParam(required = true) final String password) {
-        if(!userDetailsService.userExists(username)) {
+    @RequestMapping(value = "/userExists", method = RequestMethod.GET)
+    public boolean userExists(@RequestParam(value="teamName") final String teamName) {
+        return userDetailsService.userExists(teamName);
+    }
+
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public void addUser(@RequestBody final NewUserSubmission newUser,
+                        final HttpServletResponse response) {
+        if(!userDetailsService.userExists(newUser.getTeamName())) {
             final List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("USER"));
-            final User userDetails = new User(username,
-                    passwordEncoder.encode(password), authorities);
 
+            // User isn't enabled until email confirmation, everything else is good
+            final User userDetails = new User(newUser.getTeamName(),
+                    passwordEncoder.encode(newUser.getPassword()), false, true, true, true, authorities);
             userDetailsService.createUser(userDetails);
+
+
+            response.setStatus(200);
         }
     }
 }

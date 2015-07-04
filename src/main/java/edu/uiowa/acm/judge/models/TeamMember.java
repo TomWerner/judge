@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Table(name = "tblJDG_team_member")
 public class TeamMember implements Serializable {
     @Id
-    @Column(name="team_member_id")
+    @Column(name = "team_member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -21,18 +21,6 @@ public class TeamMember implements Serializable {
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = true)
-    private String email;
-
-    public TeamMember(@NotNull final Team team,
-                      @NotNull final String name,
-                      final String email) {
-        super();
-        this.team = team;
-        this.name = name;
-        this.email = email;
-    }
 
     public TeamMember(@NotNull final Team team,
                       @NotNull final String name) {
@@ -56,12 +44,5 @@ public class TeamMember implements Serializable {
     public void setName(final String name) {
         this.name = name;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(final String email) {
-        this.email = email;
-    }
 }
+

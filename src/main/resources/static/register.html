@@ -1,0 +1,58 @@
+<div class="login-container">
+    <div class="panel panel-default login-panel">
+        <div class="panel-heading"><h1>Hawkeye Programming Challenge Registration</h1></div>
+        <div class="panel-body">
+            <div class="alert alert-danger" ng-show="error">
+                {{ errorMessage }}
+            </div>
+            <div class="brand">
+                <img class="img img-icon" src="/images/uiowaLogo.png" alt="University of Iowa Logo">
+            </div>
+
+            <div class="form-container">
+                <form role="form" ng-submit="register()">
+                    <div class="form-group">
+                        <label for="teamName">Team Name:</label>
+                        <input type="text" class="form-control" id="teamName" name="teamName" ng-model="teamDetails.teamName"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolName">School Name:</label>
+                        <input type="text" class="form-control" id="schoolName" name="schoolName" ng-model="teamDetails.schoolName"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Contact Email (used for verification):</label>
+                        <input type="text" class="form-control" id="email" name="email" ng-model="teamDetails.email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="division">Division:</label>
+                        <select class="form-control" id="division" name="division" ng-model="teamDetails.division">
+                            <option id="DIVISION_1">Division 1 (AP)</option>
+                            <option id="DIVISION_2">Division 2 (No AP)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="member1Name">Team Member 1 Name:</label>
+                        <input type="text" class="form-control" id="member1Name" name="member1Name" ng-model="teamDetails.member1Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="member2Name">Team Member 2 Name:</label>
+                        <input type="text" class="form-control" id="member2Name" name="member2Name" ng-model="teamDetails.member2Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="member3Name">Team Member 3 Name:</label>
+                        <input type="text" class="form-control" id="member3Name" name="member3Name" ng-model="teamDetails.member3Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" ng-model="teamDetails.password"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="repeat_password">Repeat Password:</label>
+                        <input type="password" class="form-control" id="repeat_password" name="repeat_password" ng-model="teamDetails.repeat_password"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
