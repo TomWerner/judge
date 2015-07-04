@@ -46,10 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().and()
                 .authorizeRequests()
                 .antMatchers("/index.html",
-                        "/home.html",
-                        "/login.html",
-                        "/register.html",
+                        "/html/home.html",
+                        "/html/login.html",
+                        "/html/register.html",
                         "/",
+                        "/user/confirm/",
                         "/user/addUser",
                         "/user/userExists").permitAll().anyRequest()
                 .authenticated().and()
@@ -67,8 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-
-
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
         auth.jdbcAuthentication().dataSource(dataSource);
     }

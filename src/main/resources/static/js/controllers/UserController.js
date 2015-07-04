@@ -53,7 +53,7 @@ var authenticate = function($http, $rootScope, credentials, callback) {
     } : {};
 
     $http.get('user/getUser', {headers : headers}).success(function(data) {
-        $rootScope.authenticated = !!data.name;
+        $rootScope.authenticated = !!data['team']['teamName'];
         callback && callback();
     }).error(function() {
         $rootScope.authenticated = false;

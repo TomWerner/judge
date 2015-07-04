@@ -7,10 +7,10 @@ public class NewUserSubmission {
     private String teamName;
     private String schoolName;
     private String email;
-    private Team.TeamLevel division;
+    private String division;
     private String member1Name;
     private String member2Name;
-    private String member3name;
+    private String member3Name;
     private String password;
 
     public NewUserSubmission() {
@@ -20,10 +20,10 @@ public class NewUserSubmission {
     public NewUserSubmission(final String teamName,
                              final String schoolName,
                              final String email,
-                             final Team.TeamLevel division,
+                             final String division,
                              final String member1Name,
                              final String member2Name,
-                             final String member3name,
+                             final String member3Name,
                              final String password) {
         super();
         this.teamName = teamName;
@@ -32,7 +32,7 @@ public class NewUserSubmission {
         this.division = division;
         this.member1Name = member1Name;
         this.member2Name = member2Name;
-        this.member3name = member3name;
+        this.member3Name = member3Name;
         this.password = password;
     }
 
@@ -60,12 +60,12 @@ public class NewUserSubmission {
         this.member2Name = member2Name;
     }
 
-    public String getMember3name() {
-        return member3name;
+    public String getMember3Name() {
+        return member3Name;
     }
 
-    public void setMember3name(final String member3name) {
-        this.member3name = member3name;
+    public void setMember3Name(final String member3Name) {
+        this.member3Name = member3Name;
     }
 
     public String getPassword() {
@@ -92,11 +92,11 @@ public class NewUserSubmission {
         this.email = email;
     }
 
-    public Team.TeamLevel getDivision() {
+    public String getDivision() {
         return division;
     }
 
-    public void setDivision(final Team.TeamLevel division) {
+    public void setDivision(final String division) {
         this.division = division;
     }
 }

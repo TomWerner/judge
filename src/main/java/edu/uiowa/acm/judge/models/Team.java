@@ -10,8 +10,14 @@ import java.io.Serializable;
 @Table(name = "tblJDG_team")
 public class Team implements Serializable {
     public enum TeamLevel {
-        DIVISION_1,
-        DIVISION_2
+        DIVISION_1("Division 1 (AP)"),
+        DIVISION_2("Division 2 (No AP)");
+
+        private final String division;
+
+        TeamLevel(final String division) {
+            this.division = division;
+        }
     }
 
     @Id
@@ -34,12 +40,21 @@ public class Team implements Serializable {
     @Column
     private TeamLevel teamLevel;
 
-    public Team(final TeamLevel teamLevel, final String teamName, final String schoolName) {
+    @Column
+    private String email;
+
+    public Team(final TeamLevel teamLevel,
+                final String teamName,
+                final String schoolName,
+                final String email) {
         super();
         this.teamLevel = teamLevel;
         this.teamName = teamName;
         this.schoolName = schoolName;
+        this.email = email;
     }
+
+    public Team() {}
 
     public Long getId() {
         return id;
@@ -83,5 +98,13 @@ public class Team implements Serializable {
 
     public void setTeamLevel(final TeamLevel teamLevel) {
         this.teamLevel = teamLevel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
     }
 }
