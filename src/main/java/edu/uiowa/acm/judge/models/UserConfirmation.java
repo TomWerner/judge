@@ -4,17 +4,19 @@ package edu.uiowa.acm.judge.models;
  * Created by Tom on 7/4/2015.
  */
 public class UserConfirmation {
+    private String email;
     private Long id;
     private String username;
     private String uuid;
     private boolean confirmed;
 
-    public UserConfirmation(final Long id, final String username, final String uuid, final boolean confirmed) {
+    public UserConfirmation(final Long id, final String username, final String email, final String uuid, final boolean confirmed) {
         super();
         this.id = id;
         this.username = username;
         this.uuid = uuid;
         this.confirmed = confirmed;
+        this.email = email;
     }
 
     public Long getId() {
@@ -47,5 +49,13 @@ public class UserConfirmation {
 
     public void setUuid(final String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
     }
 }

@@ -18,6 +18,17 @@ public class Team implements Serializable {
         TeamLevel(final String division) {
             this.division = division;
         }
+
+        public static TeamLevel getDivision(final String division) {
+            switch (division) {
+                case "Division 1 (AP)":
+                    return Team.TeamLevel.DIVISION_1;
+                case "Division 2 (No AP)":
+                    return Team.TeamLevel.DIVISION_2;
+                default:
+                    return null;
+            }
+        }
     }
 
     @Id
@@ -42,6 +53,8 @@ public class Team implements Serializable {
 
     @Column
     private String email;
+
+    private boolean confirmed;
 
     public Team(final TeamLevel teamLevel,
                 final String teamName,
@@ -106,5 +119,13 @@ public class Team implements Serializable {
 
     public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(final boolean confirmed) {
+        this.confirmed = confirmed;
     }
 }

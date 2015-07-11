@@ -22,6 +22,7 @@ CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`us
 CREATE TABLE `tblJDG_user_confirmation` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `uuid` VARCHAR(255) NOT NULL,
   `confirmed` TINYINT(1) NOT NULL DEFAULT false,
   PRIMARY KEY (`id`)

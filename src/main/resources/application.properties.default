@@ -22,4 +22,8 @@ spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
 gmail.username =
 gmail.password =
 
+# Base url - used for confirmation email (<base url>/#/confirm/userId/uuid)
 base.url = localhost:8080
+
+admin.username = admin
+admin.password = password

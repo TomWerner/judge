@@ -1,0 +1,40 @@
+.sideNavItem {
+    list-style-type: none;
+    background: #E3E3E3;
+    padding: 10px;
+    margin: 5px 5px 5px 5px;
+    border: 2px solid #D0D0D0;
+    display: block;
+    text-decoration: none;
+    color: #434343;
+}
+
+.sideNavItem:hover {
+    list-style-type: none;
+    background: #eaeaea;
+    padding: 10px;
+    margin: 5px 5px 5px 5px;
+    border: 2px solid #D0D0D0;
+    display: block;
+    text-decoration: none;
+    color: #4a4a4a;
+}
+
+.sideNavHeader {
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.sideNavHeader:hover {
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.sideNavActive {
+    border: 2px solid #c0c0c0;
+    background: #d3d3d3;
+}
+
+.sideNavActive:hover {
+    border: 2px solid #c0c0c0;
+    background: #dadada;
+}

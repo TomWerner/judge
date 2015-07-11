@@ -27,7 +27,7 @@ public class EmailService {
                 "\tThank you for registering for the hawkeye programming challenge! \n" +
                 "To complete your registration we just need you to confirm your email account.\n" +
                 "To do so, please click the following link or paste it into your browser.\n" +
-                baseUrl + "/user/confirm/" + userId + "/" + uuid + "\n\n" +
+                baseUrl + "/#/confirm/" + userId + "/" + uuid + "\n\n" +
                 "Thanks,\n" +
                 "University of Iowa ACM");
         mailSender.send(message);

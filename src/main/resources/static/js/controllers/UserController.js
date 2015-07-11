@@ -1,7 +1,10 @@
 angular.module('app').controller('navigation',
-    function($rootScope, $scope, $http, $location) {
+    function($rootScope, $scope, $route, $http, $location) {
+        authenticate($http, $rootScope, $scope.credentials, function() {});
+
         $scope.credentials = {};
         $scope.teamDetails = {};
+        $scope.$route = $route;
 
         $scope.login = function() {
             authenticate($http, $rootScope, $scope.credentials, function() {
@@ -36,7 +39,7 @@ angular.module('app').controller('navigation',
             }).error(function(data) {
                 $rootScope.authenticated = false;
             });
-        }
+        };
     }
 );
 
@@ -52,13 +55,30 @@ var authenticate = function($http, $rootScope, credentials, callback) {
     + btoa(credentials.username + ":" + credentials.password)
     } : {};
 
-    $http.get('user/getUser', {headers : headers}).success(function(data) {
-        $rootScope.authenticated = !!data['team']['teamName'];
+    $http.get('user/getUser', {headers : headers}).success(function(/** User */ data) {
+        $rootScope.authenticated = !!data;
+        if ($rootScope.authenticated) {
+            $rootScope.user = data;
+            $rootScope.isAdmin = isAdmin(data.authorities);
+        }
         callback && callback();
     }).error(function() {
         $rootScope.authenticated = false;
         callback && callback();
     });
+};
+
+/**
+ * Determines if a user is an admin from their authorities
+ * @param {Array.<authority>} authorities
+ */
+var isAdmin = function(authorities) {
+    for (var i = 0; i < authorities.length; i++) {
+        if (authorities[i].authority === "ROLE_ADMIN") {
+            return true;
+        }
+    }
+    return false;
 };
 
 /**
@@ -118,7 +138,7 @@ var checkRegistration = function($http, teamDetails, success, error) {
     }
 
     $http.get('user/userExists', {params: {teamName: teamDetails.teamName}})
-        .success(function(data) {
+        .success(function(/** boolean */ data) {
             if (data) {
                 error("Team name already taken. Please try another.");
             }
@@ -134,7 +154,7 @@ var checkRegistration = function($http, teamDetails, success, error) {
 /**
  * Registers the team specified
  * @param $http
- * @param $rootScope {{authenticated: boolean}}
+ * @param $rootScope {$rootScope}
  * @param $location {{path: function(String)}}
  * @param teamDetails {NewUserSubmission}
  * @param error {function(String)}
@@ -158,28 +178,3 @@ var doRegister = function($http, $rootScope, $location, teamDetails, error) {
             error("Error attempting to register. Please try again later.")
         });
 };
-
-/**
- *
- * @param teamName {String}
- * @param schoolName {String}
- * @param email {String}
- * @param division {String}
- * @param member1Name {String}
- * @param member2Name {?String}
- * @param member3Name {?String}
- * @param password {String}
- * @param repeat_password {String}
- * @constructor
- */
-function NewUserSubmission(teamName, schoolName, email, division, member1Name, member2Name, member3Name, password, repeat_password) {
-    this.teamName = teamName;
-    this.schoolName = schoolName;
-    this.email = email;
-    this.division = division;
-    this.member1Name = member1Name;
-    this.member2Name = member2Name;
-    this.member3Name = member3Name;
-    this.password = password;
-    this.repeat_password = repeat_password;
-}

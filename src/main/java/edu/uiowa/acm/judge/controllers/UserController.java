@@ -1,5 +1,6 @@
 package edu.uiowa.acm.judge.controllers;
 
+import com.google.common.collect.Lists;
 import com.mysql.jdbc.StringUtils;
 import edu.uiowa.acm.judge.dao.ConfirmationDao;
 import edu.uiowa.acm.judge.dao.TeamDao;
@@ -8,7 +9,8 @@ import edu.uiowa.acm.judge.mail.EmailService;
 import edu.uiowa.acm.judge.models.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -28,6 +28,9 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
     private final Logger LOG = Logger.getLogger(UserController.class);
+
+    @Value("${security.user.name}")
+    private String adminName;
 
     @Autowired
     private JdbcUserDetailsManager userDetailsService;
@@ -48,11 +51,8 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/getUser", method = RequestMethod.GET)
-    public Account user(final Principal user) {
-        final Team team = teamDao.findByTeamName(user.getName());
-        final boolean confirmed = confirmationDao.getUserConfirmation(user.getName()).isConfirmed();
-
-        return new Account(team, confirmed);
+    public Principal user(final Principal user) {
+        return user;
     }
 
     @RequestMapping(value = "/userExists", method = RequestMethod.GET)
@@ -64,17 +64,15 @@ public class UserController {
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public void addUser(@RequestBody final NewUserSubmission newUser,
                         final HttpServletResponse response) {
-        if(!userDetailsService.userExists(newUser.getTeamName())) {
-            final List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("USER"));
+        if(!userDetailsService.userExists(newUser.getTeamName()) && !adminName.equals(newUser.getTeamName())) {
 
             final User userDetails = new User(newUser.getTeamName(),
-                    passwordEncoder.encode(newUser.getPassword()), authorities);
+                    passwordEncoder.encode(newUser.getPassword()), Lists.newArrayList(new SimpleGrantedAuthority("USER")));
             userDetailsService.createUser(userDetails);
 
 //            // Create our UUID for email confirmation
             final String uuid = getStringUUID();
-            final int userId = confirmationDao.insert(newUser.getTeamName(), uuid);
+            final int userId = confirmationDao.insert(newUser.getTeamName(), newUser.getEmail(), uuid);
             emailService.sendConfirmationEmail(newUser.getEmail(), userId, uuid);
 
             // Save the team
@@ -84,8 +82,21 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/resendConfirmation/{userId}", method = RequestMethod.POST)
+    public boolean resendConfirmation(@PathVariable("userId") final Long userId) {
+        try {
+            final UserConfirmation userConfirmation = confirmationDao.getUserConfirmation(userId);
+            emailService.sendConfirmationEmail(userConfirmation.getEmail(), userId.intValue(), getStringUUID());
+            return true;
+        }
+        catch (final Exception e) {
+            LOG.error("An error occurred trying to resend a confirmation email to user " + userId, e);
+            return false;
+        }
+    }
+
     private Team saveTeam(final NewUserSubmission newUser) {
-        final Team team = new Team(getDivision(newUser.getDivision()), newUser.getTeamName(), newUser.getSchoolName(), newUser.getEmail());
+        final Team team = new Team(Team.TeamLevel.getDivision(newUser.getDivision()), newUser.getTeamName(), newUser.getSchoolName(), newUser.getEmail());
         teamDao.save(team);
         teamMemberDao.save(new TeamMember(team, newUser.getMember1Name()));
         if (!StringUtils.isEmptyOrWhitespaceOnly(newUser.getMember2Name())) {
@@ -98,27 +109,20 @@ public class UserController {
         return team;
     }
 
-    private Team.TeamLevel getDivision(final String division) {
-        switch (division) {
-            case "Division 1 (AP)":
-                return Team.TeamLevel.DIVISION_1;
-            case "Division 2 (No AP)":
-                return Team.TeamLevel.DIVISION_2;
-            default:
-                return null;
-        }
-    }
-
-    @RequestMapping(value = "/confirm/{teamId}/{uuid}/", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirm/{teamId}/{uuid}", method = RequestMethod.GET)
     public boolean userExists(@PathVariable("teamId") final Long userId,
-                              @PathVariable("uuuid") final String uuid) {
-        final UserConfirmation userConfirmation = confirmationDao.getUserConfirmation(userId);
-        if (uuid.equals(userConfirmation.getUuid())) {
-            confirmationDao.setConfirmed(userId);
-            return true;
+                              @PathVariable("uuid") final String uuid) {
+        try {
+            final UserConfirmation userConfirmation = confirmationDao.getUserConfirmation(userId);
+            if (uuid.equals(userConfirmation.getUuid())) {
+                confirmationDao.setConfirmed(userConfirmation);
+                return true;
+            } else {
+                return false;
+            }
         }
-        else {
-            return false;
+        catch (final EmptyResultDataAccessException e) {
+            return false; //Invalid team ID
         }
     }
 

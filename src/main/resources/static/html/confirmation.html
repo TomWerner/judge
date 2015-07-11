@@ -1,0 +1,28 @@
+<div class="login-container">
+    <div class="panel panel-default login-panel">
+        <div class="panel-heading"><h1>Account Confirmation</h1></div>
+        <div class="panel-body">
+
+            <div class="brand">
+                <img class="img img-icon" src="/images/uiowaLogo.png" alt="University of Iowa Logo">
+            </div>
+
+            <div class="form-container" id="error-div" ng-show="confirmationError">
+                <div class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
+                <form role="form" ng-submit="resend()">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-danger pull-right">Resend Confirmation Email</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-container" id="success-div" ng-show="!confirmationError">
+                <div class="alert alert-success">
+                    {{ successMessage }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
