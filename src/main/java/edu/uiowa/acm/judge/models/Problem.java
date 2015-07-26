@@ -16,38 +16,35 @@ public class Problem implements Serializable {
     private Long id;
 
     @Column
-    private Team.TeamLevel teamLevel;
+    private Team.TeamLevel division;
 
     @Column
     private String problemTitle;
 
-    @Column
+    @Column(length = 10000)
     private String problemBody;
 
-    @Column
-    private boolean enabled;
-
-    public Problem(final Team.TeamLevel teamLevel,
+    public Problem(final Team.TeamLevel division,
                    final String problemTitle,
-                   final String problemBody,
-                   final boolean enabled) {
+                   final String problemBody) {
         super();
-        this.teamLevel = teamLevel;
+        this.division = division;
         this.problemTitle = problemTitle;
         this.problemBody = problemBody;
-        this.enabled = enabled;
     }
+
+    public Problem() {}
 
     public Long getId() {
         return id;
     }
 
-    public Team.TeamLevel getTeamLevel() {
-        return teamLevel;
+    public Team.TeamLevel getDivision() {
+        return division;
     }
 
-    public void setTeamLevel(final Team.TeamLevel teamLevel) {
-        this.teamLevel = teamLevel;
+    public void setDivision(final Team.TeamLevel division) {
+        this.division = division;
     }
 
     public String getProblemTitle() {
@@ -66,11 +63,4 @@ public class Problem implements Serializable {
         this.problemBody = problemBody;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(final boolean enabled) {
-        this.enabled = enabled;
-    }
 }

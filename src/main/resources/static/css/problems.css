@@ -1,0 +1,17 @@
+.problemItem {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #efefef;
+}
+
+.problemItemTitle {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.editor {
+    width: 100%;
+    height: 20em;
+    border: 1px solid #888;
+}

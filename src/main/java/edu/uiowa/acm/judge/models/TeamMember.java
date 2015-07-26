@@ -29,6 +29,8 @@ public class TeamMember implements Serializable {
         this.name = name;
     }
 
+    public TeamMember() {}
+
     public Team getTeam() {
         return team;
     }

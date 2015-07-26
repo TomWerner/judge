@@ -1,9 +1,9 @@
 .sideNavItem {
     list-style-type: none;
-    background: #E3E3E3;
+    background: #f3f3f3;
     padding: 10px;
     margin: 5px 5px 5px 5px;
-    border: 2px solid #D0D0D0;
+    border: 1px solid #e0e0e0;
     display: block;
     text-decoration: none;
     color: #434343;
@@ -14,10 +14,21 @@
     background: #eaeaea;
     padding: 10px;
     margin: 5px 5px 5px 5px;
-    border: 2px solid #D0D0D0;
+    border: 1px solid #e0e0e0;
     display: block;
     text-decoration: none;
     color: #4a4a4a;
+}
+
+.sideNavSubItem {
+    list-style-type: none;
+    background: #f3f3f3;
+    padding: 4px;
+    margin: 2px 5px 2px 30px;
+    border: 1px solid #e0e0e0;
+    display: block;
+    text-decoration: none;
+    color: #434343;
 }
 
 .sideNavHeader {
@@ -30,11 +41,15 @@
 }
 
 .sideNavActive {
-    border: 2px solid #c0c0c0;
-    background: #d3d3d3;
+    border: 1px solid #c0c0c0;
+    background: #e3e3e3;
 }
 
 .sideNavActive:hover {
-    border: 2px solid #c0c0c0;
-    background: #dadada;
+    border: 1px solid #c0c0c0;
+    background: #eaeaea;
+}
+
+.nav-background {
+    background: #e5e5e5;
 }

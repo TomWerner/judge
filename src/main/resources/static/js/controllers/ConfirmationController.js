@@ -1,5 +1,5 @@
 angular.module('app').controller('confirmation',
-    function($rootScope, $scope, $routeParams, $http, $location) {
+    function($rootScope, $scope, $routeParams, $route, $http, $location) {
         $scope.$route = $route;
         $scope.userId = $routeParams.userId;
         $scope.uuid = $routeParams.uuid;

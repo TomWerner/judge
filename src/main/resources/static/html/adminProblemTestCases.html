@@ -1,0 +1,33 @@
+<div class="admin-container" ng-show="isAdmin">
+    <div class="col-xs-2">
+        <p class="sideNavItem sideNavHeader">Admin Home</p>
+        <a class="sideNavItem" ng-class="{sideNavActive: $route.current.activeSubTab == 'adminTeams'}" href="/#/admin">Teams</a>
+        <a class="sideNavItem" ng-class="{sideNavActive: $route.current.activeSubTab == 'adminProblems'}" href="/#/admin/problems">Problems</a>
+            <a class="sideNavSubItem"  ng-class="{sideNavActive: $route.current.activeSubSubTab == 'problem'}"href="/#/admin/problem/{{problem.id}}">Problem</a>
+            <a class="sideNavSubItem" ng-class="{sideNavActive: $route.current.activeSubSubTab == 'testCases'}" href="/#/admin/problem/{{problem.id}}/testCases">Test Cases</a>
+            <div ng-repeat="solution in solutions">
+                <a class="sideNavSubItem" ng-class="{sideNavActive: $route.current.activeSubSubTab == '{{solution.language}}'}"
+                   href="/#/admin/problem/{{problem.id}}/{{solution.languageId}}">{{solution.language}}</a>
+            </div>
+            <a class="sideNavSubItem"  ng-class="{sideNavActive: $route.current.activeSubSubTab == 'newSolution'}"href="/#/admin/problem/{{problemId}}/new">New Solution</a>
+        <a class="sideNavItem" ng-class="{sideNavActive: $route.current.activeSubTab == 'adminClarification'}" href="/#/admin/problems">Clarification</a>
+    </div>
+    <div class="col-xs-10">
+        <div class="problemItemTitle">{{problem.problemTitle + '  (' + problem.division + ')'}}</div>
+
+        <div class="form">
+            <div ng-repeat="testCase in testCases">
+                <textarea ng-model="testCase.input" rows="10" class="form-control" style="min-width: 50%"></textarea>
+                <textarea ng-model="testCase.output" rows="10" class="form-control" style="min-width: 50%"></textarea>
+            </div>
+        </div>
+        <div class="text-right">
+            <button type="button" id="addProblem" class="btn button" style="margin-top: 15px"
+                    ng-click="saveProblem(problem)">Save Problem</button>
+        </div>
+    </div>
+
+</div>
+<div class="admin-container" ng-show="!isAdmin">
+    <div class="notificationBad">You aren't authorized to see this page.</div>
+</div>

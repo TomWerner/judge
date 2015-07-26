@@ -8,6 +8,7 @@
         <link href="css/utility.css" rel="stylesheet">
         <link href="css/navigation.css" rel="stylesheet">
         <link href="css/tables.css" rel="stylesheet">
+        <link href="css/problems.css" rel="stylesheet">
         <style type="text/css">
             [ng\:cloak], [ng-cloak], .ng-cloak {
                 display: none !important;
@@ -15,8 +16,8 @@
         </style>
     </head>
 
-    <body ng-app="app" ng-cloak class="ng-cloak hawkeye-background">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+    <body ng-app="app" ng-cloak class="ng-cloak">
+        <nav class="navbar navbar-fixed-top nav-background">
             <div ng-controller="navigation" class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -49,11 +50,12 @@
             </div>
         </nav>
 
-        <div ng-view class="container"></div>
+        <div ng-view class="container padded--container"></div>
         <script src="js/angular-bootstrap.js" type="text/javascript"></script>
         <script src="js/app.js"></script>
         <script src="js/controllers/UserController.js"></script>
         <script src="js/controllers/ConfirmationController.js"></script>
         <script src="js/controllers/AdminController.js"></script>
+        <script src="../js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

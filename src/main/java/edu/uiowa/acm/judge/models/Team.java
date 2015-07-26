@@ -1,5 +1,7 @@
 package edu.uiowa.acm.judge.models;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,6 +19,11 @@ public class Team implements Serializable {
 
         TeamLevel(final String division) {
             this.division = division;
+        }
+
+        @JsonValue
+        public String value() {
+            return division;
         }
 
         public static TeamLevel getDivision(final String division) {

@@ -1,14 +1,11 @@
-<div class="admin-container" ng-controller="adminTeams" ng-show="isAdmin">
-    <div class="col-xs-3">
-        <p class="sideNavItem sideNavHeader" ng-class="{active: $route.current.activeTab == 'adminHome'}" href="/#/admin">Admin Home</p>
-        <a class="sideNavItem" ng-class="{sideNavActive: $route.current.activeSubTab == 'adminTeams'}" href="/#/admin/problems">Teams</a>
+<div class="admin-container" ng-show="isAdmin">
+    <div class="col-xs-2">
+        <p class="sideNavItem sideNavHeader">Admin Home</p>
+        <a class="sideNavItem" ng-class="{sideNavActive: $route.current.activeSubTab == 'adminTeams'}" href="/#/admin">Teams</a>
         <a class="sideNavItem" ng-class="{sideNavActive: $route.current.activeSubTab == 'adminProblems'}" href="/#/admin/problems">Problems</a>
         <a class="sideNavItem" ng-class="{sideNavActive: $route.current.activeSubTab == 'adminClarification'}" href="/#/admin/problems">Clarification</a>
     </div>
-    <div class="col-xs-9">
-        <div>
-            Team Listing
-        </div>
+    <div class="col-xs-10">
         <table class="table">
             <thead>
                 <tr>
@@ -20,15 +17,18 @@
             </thead>
             <tbody>
                 <tr ng-repeat="team in teams">
-                    <td>{{team.teamName}}</td>
+                    <td><a href="/#/teams/{{team.id}}">{{team.teamName}}</a></td>
                     <td>{{team.schoolName}}</td>
-                    <td>{{team.division}}</td>
-                    <td>{{team.teamName}}</td>
+                    <td>{{team.teamLevel}}</td>
+                    <td>
+                        <div ng-show="team.confirmed">Yes</div>
+                        <div ng-show="!team.confirmed">No</div>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-<div class="admin-container" ng-controller="adminTeams" ng-show="!isAdmin">
+<div class="admin-container" ng-show="!isAdmin">
     <div class="notificationBad">You aren't authorized to see this page.</div>
 </div>

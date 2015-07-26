@@ -9,6 +9,7 @@
     font-size: 13px;
 }
 
-.container {
+.padded--container {
     padding-top: 100px;
+    margin-bottom: 50px;
 }

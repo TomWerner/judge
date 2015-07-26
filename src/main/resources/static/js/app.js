@@ -21,6 +21,23 @@ angular.module('app', [ 'ngRoute' ])
             controller: 'adminTeams',
             activeTab: 'admin',
             activeSubTab: 'adminTeams'
+        }).when('/admin/problems', {
+            templateUrl: 'html/adminProblems.html',
+            controller: 'adminProblems',
+            activeTab: 'admin',
+            activeSubTab: 'adminProblems'
+        }).when('/admin/problem/:problemId', {
+            templateUrl: 'html/adminProblem.html',
+            controller: 'adminProblem',
+            activeTab: 'admin',
+            activeSubTab: 'adminProblems',
+            activeSubSubTab: 'problem'
+        }).when('/admin/problem/:problemId/testCases', {
+            templateUrl: 'html/adminProblemTestCases.html',
+            controller: 'adminProblemTestCases',
+            activeTab: 'admin',
+            activeSubTab: 'adminProblems',
+            activeSubSubTab: 'testCases'
         }).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -32,10 +49,11 @@ angular.module('app', [ 'ngRoute' ])
     });
 
 /**
- * @typedef {Object} $rootScope
- * @property {Boolean|boolean} authenticated
- * @property {User} user
- * @property {Boolean|boolean} isAdmin
+ * @typedef {{
+        authenticated: (Boolean|boolean),
+        user: (User),
+        isAdmin: (Boolean|boolean)
+    }} $rootScope
  */
 var $rootScope;
 
@@ -85,3 +103,13 @@ var TeamLevel = {
     DIVISION_1: "Division 1 (AP)",
     DIVISION_2: "Division 2 (No AP)"
 };
+
+/**
+ * @typedef {{
+        id: (Number|number),
+        division: (TeamLevel),
+        problemTitle: (String|string),
+        problemBody: (String|string)
+ * }} Problem
+ */
+var Problem;
